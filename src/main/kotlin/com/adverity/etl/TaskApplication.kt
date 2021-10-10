@@ -18,7 +18,7 @@ class TaskApplication {
     fun docket(): Docket {
         return Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage(this::javaClass.get().packageName))
+                .apis(RequestHandlerSelectors.basePackage("com.adverity.etl"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(generateApiInfo())
