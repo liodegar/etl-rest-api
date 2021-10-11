@@ -5,12 +5,10 @@ import com.adverity.etl.util.*
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
+import org.springframework.util.StreamUtils
+import java.nio.charset.StandardCharsets
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.stream.Stream
 
 private val logger = KotlinLogging.logger {}
 
@@ -25,13 +23,13 @@ class DataLoader(private val webTrackingRepository: WebTrackingRepository) {
 
     fun load() {
         try {
-            val path: Path = Paths.get(javaClass.classLoader.getResource(resourcePath).toURI())
-            val lines: Stream<String> = Files.lines(path)
-            lines.use { stream ->
-                stream.skip(1) //discarding header
-                        .map { toWebTracking(it) }
-                        .forEach { webTrackingRepository.save(it) }
-            }
+            val csvContent = StreamUtils.copyToString(javaClass.classLoader.getResource(resourcePath).openStream(), StandardCharsets.UTF_8)
+            val lines = csvContent.split(Regex("\\r?\\n|\\r"))
+            lines.drop(1) //discarding header
+                    .filterNot { it.isNullOrEmpty() }
+                    .map { toWebTracking(it) }
+                    .forEach { webTrackingRepository.save(it) }
+
         } catch (e: Exception) {
             logger.error(e) { "Exception thrown while loading initial data resource=$resourcePath" }
             throw e
