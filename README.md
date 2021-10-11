@@ -31,7 +31,7 @@ A simple ETL Spring Boot application with H2. This API provides the following ba
 
 ## Getting Started
 
-In order to start the application and run the APIs, you should execute from a command line the following instruction:
+In order to start the application locally and run the APIs, you should execute from a command line the following instruction:
 
 `./mvnw spring-boot:run`
 
@@ -40,13 +40,13 @@ You must be inside the base project directory the previous command.
 After this the Adverity ETL REST API (AERA) will start.
 
 ### Deployment
-
+The application is fully deployed on Heroku and it is accessible at: https://etl-rest-api.herokuapp.com
 
 ### Running the web services
 
 1. To get access to the API, you should get a token in the following endpoint:
 
-   `http://localhost:8080/v1/security/generate-token?subject=appSubject`
+   `https://etl-rest-api.herokuapp.com/v1/security/generate-token?subject=appSubject`
 
    HTTP method: GET
       
@@ -71,7 +71,7 @@ After this the Adverity ETL REST API (AERA) will start.
 
 2. After generating the token, you can get the list of WebTracking objects for dataSource and optional parameters:
    
-    `http://localhost:8080/v1/adverity/web-trackings/data-sources//Google Ads?campaign=GDN_Retargeting`
+    `https://etl-rest-api.herokuapp.com/v1/adverity/web-trackings/data-sources//Google Ads?campaign=GDN_Retargeting`
    
     HTTP method: GET
     
@@ -108,7 +108,7 @@ After this the Adverity ETL REST API (AERA) will start.
 
 3. To get the list of aggregated statistic values per metric and dataSource:
 
-   `http://localhost:8080/v1/adverity/statistics/metrics/IMPRESSIONS/data-sources/Google Ads?campaign=GDN_Retargeting`
+   `https://etl-rest-api.herokuapp.com/v1/adverity/statistics/metrics/IMPRESSIONS/data-sources/Google Ads?campaign=GDN_Retargeting`
 
     HTTP method: GET
 
@@ -137,7 +137,7 @@ After this the Adverity ETL REST API (AERA) will start.
 
 4. To get the statistics summary for the given datasource and optional parameters:
 
-   `http://localhost:8080/v1/adverity/summary-statistics/data-sources/{dataSource}/Google Ads?campaign=GDN_Retargeting`
+   `https://etl-rest-api.herokuapp.com/v1/adverity/summary-statistics/data-sources/{dataSource}/Google Ads?campaign=GDN_Retargeting`
 
    HTTP method: GET
 
@@ -179,7 +179,7 @@ After this the Adverity ETL REST API (AERA) will start.
 ##Restrictions
 As this service is an ETL POC, there is still room for improvement, like:
 
-- Caching, at the client level (ETags) for GET retrieval operations, and the other at the application level (Redis to cache the service results).
+- Caching, at the client level (ETags) for GET retrieval operations, and at the application level (Redis to cache the service results).
 
 - Comprehensive testings for all the layers.
 
@@ -192,7 +192,7 @@ As this service is an ETL POC, there is still room for improvement, like:
 
 ## More info
 
-You can check all the functionalities exposed by this API in: `http://localhost:8080/swagger-ui.html`
+You can check all the functionalities exposed by this API in: `https://etl-rest-api.herokuapp.com/swagger-ui.html`
 
 ![Adverity ETL REST API (AERA)](swagger.png "Adverity ETL REST API (AERA)")
 
